@@ -1,0 +1,101 @@
+/* Enhanced background featuring soft gradient transitions */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #c0d2fc, #e0c3fc); /* pastel blue to lavender */
+  background-attachment: fixed;
+  background-size: cover;
+  color: #333;
+}
+
+/* Glassy, elevated container for content */
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout styling */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+form, .controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.controls {
+  margin-bottom: 10px;
+}
+input, select, button {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+}
+
+/* Progress bar style */
+.progress-container {
+  position: relative;
+  background: #e0e0e0;
+  border-radius: 25px;
+  overflow: hidden;
+  height: 30px;
+  margin: 15px 0;
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #6dd5fa, #2980b9);
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Task item styling */
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-left: 5px solid gray;
+  border-radius: 6px;
+}
+.task.low { border-color: #27ae60; }
+.task.medium { border-color: #f39c12; }
+.task.high { border-color: #c0392b; }
+.task-content.strikethrough {
+  text-decoration: line-through;
+  color: #7f8c8d;
+}
+
+/* Dark theme override */
+.dark-theme {
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  color: #ddd;
+}
+.dark-theme .container {
+  background: rgba(34, 34, 34, 0.9);
+}
+.dark-theme input, .dark-theme select, .dark-theme button {
+  background: #444;
+  color: #ddd;
+}
+
+/* Add subtle hover effects */
+button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}

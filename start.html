@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Tracker</title>
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="stylesheet" href="design.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📉Progress Tracker</h1>
+      <button id="themeToggle">🌙</button>
+    </header>
+
+    <form id="taskForm">
+      <input type="text" id="taskInput" placeholder="Enter task name" required />
+      <input type="date" id="dueDate" required />
+      <select id="priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+
+    <div class="controls">
+      <input type="text" id="searchInput" placeholder="Search tasks..." />
+      <select id="filterStatus">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="overallProgress">
+        <span id="progressText">0%</span>
+      </div>
+    </div>
+
+    <div id="projects">
+      <!-- Task items will populate here -->
+    </div>
+  </div>
+  <script src="behaviour.js"></script>
+</body>
+</html>
