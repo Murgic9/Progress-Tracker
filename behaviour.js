@@ -47,14 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
   projectsDiv.addEventListener('change', e => {
     if (e.target.matches('.task-checkbox')) {
       tasks[+e.target.dataset.index].done = e.target.checked;
-      saveTasks(); updateProgress(); renderTasks();
+      saveTasks();
+      updateProgress();
+      renderTasks();
     }
   });
 
   projectsDiv.addEventListener('click', e => {
     if (e.target.matches('.delete-btn')) {
       tasks.splice(+e.target.dataset.index, 1);
-      saveTasks(); updateProgress(); renderTasks();
+      saveTasks();
+      updateProgress();
+      renderTasks();
     }
   });
 
@@ -66,7 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
       priority: priority.value,
       done: false
     });
-    saveTasks(); updateProgress(); renderTasks();
+    saveTasks();
+    updateProgress();
+    renderTasks();
     taskForm.reset();
   });
 
@@ -81,3 +87,26 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTasks();
   updateProgress();
 });
+
+function setAlarm(message, timeInSeconds) {
+  setTimeout(() => {
+    alert(`⏰ Reminder: ${message}`);
+    const alarmSound = new Audio('alarm.mp3');
+    alarmSound.play();
+  }, timeInSeconds * 1000);
+}
+
+if (Notification.permission !== "granted") {
+  Notification.requestPermission();
+}
+
+function showNotification(title, message) {
+  if (Notification.permission === "granted") {
+    new Notification(title, { body: message });
+  }
+}
+
+// Example of calling showNotification periodically
+setInterval(() => {
+  showNotification('Progress Tracker', 'Don\'t forget to check your tasks today!');
+}, 4 * 60 * 60 * 1000); // Every 4 hours
