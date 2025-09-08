@@ -62,6 +62,34 @@ input, select, button {
   font-weight: bold;
 }
 
+/*updated calendar*/
+#calendar-container {
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#calendar {
+  display: grid;
+  grid-template-colums: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center:
+}
+
+.calendar-day {
+  padding: 10px;
+  border-radius: 5px;
+  background: #f0f0f0;
+}
+
+.calendar-day.today {
+  background: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+
 /* Task item styling */
 .task {
   display: flex;
