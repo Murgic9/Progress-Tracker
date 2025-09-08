@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('themeToggle');
   const searchInput = document.getElementById('searchInput');
   const filterStatus = document.getElementById('filterStatus');
+  const calendarDiv = document.getElementById('calendar'); // Corrected variable name
 
   let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
@@ -84,18 +85,62 @@ document.addEventListener('DOMContentLoaded', () => {
   searchInput.addEventListener('input', renderTasks);
   filterStatus.addEventListener('change', renderTasks);
 
+  // Function to generate and render the calendar
+  function generateCalendar() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    calendarDiv.innerHTML = ""; // Corrected: Using calendarDiv
+
+    // Add day names (Sun, Mon, etc.) to the calendar header
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    dayNames.forEach(day => {
+      const dayNameDiv = document.createElement('div');
+      dayNameDiv.classList.add('calendar-day', 'day-name'); // Added 'day-name' class for styling
+      dayNameDiv.textContent = day;
+      calendarDiv.appendChild(dayNameDiv);
+    });
+
+    // Populate the days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const dayDiv = document.createElement('div');
+      dayDiv.classList.add('calendar-day');
+      dayDiv.textContent = day;
+
+      if (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        dayDiv.classList.add('today');
+      }
+
+      calendarDiv.appendChild(dayDiv);
+    }
+  }
+
+  // Initial function calls
   renderTasks();
   updateProgress();
+  generateCalendar(); // Call the calendar function inside the DOMContentLoaded listener
 });
 
+// Alarm function (note: 'alarm.mp3' will need to be in your project directory)
 function setAlarm(message, timeInSeconds) {
   setTimeout(() => {
     alert(`⏰ Reminder: ${message}`);
+    // Check if alarm.mp3 exists, otherwise, the play() method will fail
     const alarmSound = new Audio('alarm.mp3');
-    alarmSound.play();
+    alarmSound.play().catch(error => {
+      console.error("Error playing alarm sound:", error);
+    });
   }, timeInSeconds * 1000);
 }
 
+// Notification permissions and function
 if (Notification.permission !== "granted") {
   Notification.requestPermission();
 }
@@ -103,37 +148,11 @@ if (Notification.permission !== "granted") {
 function showNotification(title, message) {
   if (Notification.permission === "granted") {
     new Notification(title, { body: message });
+  } else {
+    // You can handle the case where permission is not granted here
+    console.log("Notification permission not granted. Cannot show notification.");
   }
 }
-
-function generateCalendar() {
-  const calendar = document.getElementById('calendar');
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-  const daysInMonth = new Date(year, month +1, 0).getDate();
-
-  calendar.innerHTML =";
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day);
-    const dayDiv = document.createElement('div');
-    dayDiv.classList.add('calendar-day');
-      dayDiv.textContent = day;
-
-    if (
-      date.getDate() === today.getDate()&&
-      date.getMonth() === today.getMonth()&&
-      date.getFullYear() === today.getFullYear()
-      ){
-      dayDiv.classList.add('today');
-    }
-
-    calendar.appendChild(dayDiv);
-    }
-}
-
-generateCalendar();
 
 // Example of calling showNotification periodically
 setInterval(() => {
