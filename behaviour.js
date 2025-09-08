@@ -106,6 +106,35 @@ function showNotification(title, message) {
   }
 }
 
+function generateCalendar() {
+  const calendar = document.getElementById('calendar');
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const daysInMonth = new Date(year, month +1, 0).getDate();
+
+  calendar.innerHTML =";
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const date = new Date(year, month, day);
+    const dayDiv = document.createElement('div');
+    dayDiv.classList.add('calendar-day');
+      dayDiv.textContent = day;
+
+    if (
+      date.getDate() === today.getDate()&&
+      date.getMonth() === today.getMonth()&&
+      date.getFullYear() === today.getFullYear()
+      ){
+      dayDiv.classList.add('today');
+    }
+
+    calendar.appendChild(dayDiv);
+    }
+}
+
+generateCalendar();
+
 // Example of calling showNotification periodically
 setInterval(() => {
   showNotification('Progress Tracker', 'Don\'t forget to check your tasks today!');
