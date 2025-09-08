@@ -84,6 +84,26 @@ input, select, button {
   background: #f0f0f0;
 }
 
+/* New: Style for the calendar days with tasks */
+.calendar-day.has-task {
+  position: relative;
+  border: 2px solid #2980b9; /* A blue border to indicate a task */
+  background: #e6f7ff; /* A light blue background */
+  font-weight: bold;
+}
+/* Optional: Add a subtle glow or icon to make it stand out */
+.calendar-day.has-task::after {
+    content: '🗓️';
+    font-size: 1rem;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff5733;
+    border-radius: 50%;
+    padding: 2px;
+    line-height: 1;
+}
+
 .calendar-day.today {
   background: #007bff;
   color: #fff;
@@ -109,6 +129,16 @@ input, select, button {
   color: #7f8c8d;
 }
 
+/* New: Hover effect for task editing */
+.task-content {
+    cursor: pointer;
+    flex-grow: 1; /* Allows the span to take up available space */
+}
+.task-content:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
 /* Dark theme override */
 .dark-theme {
   background: linear-gradient(135deg, #2c3e50, #4ca1af);
@@ -126,4 +156,13 @@ input, select, button {
 button:hover {
   opacity: 0.9;
   cursor: pointer;
+}
+
+/* New: Style for the sort button */
+#sortButton {
+  background: #6dd5fa;
+  color: white;
+}
+#sortButton:hover {
+  background: #2980b9;
 }
