@@ -10,19 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const filterStatus = document.getElementById('filterStatus');
     const calendarDiv = document.getElementById('calendar');
-    const streakElement = document.getElementById('streak'); // New: Get the streak display element
+    const streakElement = document.getElementById('streak');
+    const sortButton = document.getElementById('sortButton'); // New: Get the sort button
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-    // New: Load streak data from local storage
     let streakData = JSON.parse(localStorage.getItem('streak')) || {
         count: 0,
         lastDate: null
     };
 
     const saveTasks = () => localStorage.setItem('tasks', JSON.stringify(tasks));
-
-    // New: Function to save the streak data
     const saveStreak = () => localStorage.setItem('streak', JSON.stringify(streakData));
 
     const updateProgress = () => {
@@ -33,30 +30,24 @@ document.addEventListener('DOMContentLoaded', () => {
         progressText.textContent = `${percent}%`;
     };
 
-    // New: Function to check and update the daily streak
     const checkDailyStreak = () => {
-        const today = new Date().toDateString(); // e.g., "Mon Sep 08 2025"
+        const today = new Date().toDateString();
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
         const yesterdayString = yesterday.toDateString();
 
         const completedToday = tasks.some(t => t.done && new Date(t.dateCompleted).toDateString() === today);
         
-        // Logic to update streak count
         if (completedToday) {
-            // Check if the last completed day was yesterday
             if (streakData.lastDate === yesterdayString) {
-                // Increment streak if it's a new day after yesterday's completion
                 if (streakData.lastDate !== today) {
                     streakData.count++;
                 }
             } else if (streakData.lastDate !== today) {
-                // If the last completion was before yesterday, reset and start a new streak of 1
                 streakData.count = 1;
             }
             streakData.lastDate = today;
         } else if (streakData.lastDate !== today) {
-            // If no task was completed today and the last completion was before yesterday, reset the streak
             streakData.count = 0;
             streakData.lastDate = null;
         }
@@ -65,24 +56,28 @@ document.addEventListener('DOMContentLoaded', () => {
         saveStreak();
     };
 
-
     const renderTasks = () => {
         const filter = filterStatus.value;
         const searchTerm = searchInput.value.toLowerCase();
         projectsDiv.innerHTML = '';
+        
+        // Sort tasks before rendering
+        const sortedTasks = [...tasks].sort((a, b) => {
+            return new Date(a.date) - new Date(b.date);
+        });
 
-        tasks.forEach((task, idx) => {
+        sortedTasks.forEach((task, idx) => {
             if ((filter === 'active' && task.done) || (filter === 'completed' && !task.done)) return;
             if (!task.name.toLowerCase().includes(searchTerm)) return;
 
             const div = document.createElement('div');
             div.className = `task ${task.priority}`;
             div.innerHTML = `
-                <input type="checkbox" class="task-checkbox" data-index="${idx}" ${task.done ? 'checked' : ''}>
-                <span class="task-content${task.done ? ' strikethrough' : ''}">
+                <input type="checkbox" class="task-checkbox" data-index="${tasks.indexOf(task)}" ${task.done ? 'checked' : ''}>
+                <span class="task-content${task.done ? ' strikethrough' : ''}" data-index="${tasks.indexOf(task)}">
                     <strong>${task.name}</strong> — ${task.date} — ${task.priority}
                 </span>
-                <button class="delete-btn" data-index="${idx}">🗑️</button>
+                <button class="delete-btn" data-index="${tasks.indexOf(task)}">🗑️</button>
             `;
             projectsDiv.appendChild(div);
         });
@@ -93,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const index = +e.target.dataset.index;
             tasks[index].done = e.target.checked;
             
-            // New: Add a `dateCompleted` property when a task is checked
             if (e.target.checked) {
                 tasks[index].dateCompleted = new Date().toISOString();
             } else {
@@ -103,7 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             saveTasks();
             updateProgress();
             renderTasks();
-            checkDailyStreak(); // New: Call the streak function after a task is completed
+            checkDailyStreak();
+            generateCalendar();
         }
     });
 
@@ -113,7 +108,18 @@ document.addEventListener('DOMContentLoaded', () => {
             saveTasks();
             updateProgress();
             renderTasks();
-            checkDailyStreak(); // New: Re-check streak after a task is deleted
+            checkDailyStreak();
+            generateCalendar();
+        }
+        
+        if (e.target.matches('.task-content')) {
+            const index = +e.target.dataset.index;
+            const newName = prompt("Edit task name:", tasks[index].name);
+            if (newName !== null && newName.trim() !== '') {
+                tasks[index].name = newName.trim();
+                saveTasks();
+                renderTasks();
+            }
         }
     });
 
@@ -124,12 +130,13 @@ document.addEventListener('DOMContentLoaded', () => {
             date: dueDate.value,
             priority: priority.value,
             done: false,
-            dateCompleted: null // New: Add a dateCompleted property to new tasks
+            dateCompleted: null
         });
         saveTasks();
         updateProgress();
         renderTasks();
         taskForm.reset();
+        generateCalendar();
     });
 
     themeToggle.addEventListener('click', () => {
@@ -139,20 +146,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('input', renderTasks);
     filterStatus.addEventListener('change', renderTasks);
+    
+    sortButton.addEventListener('click', () => {
+        tasks.sort((a, b) => new Date(a.date) - new Date(b.date));
+        renderTasks();
+    });
 
-    // Function to generate and render the calendar
     function generateCalendar() {
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-        
-        // First Day of the Month (to get the starting day of the week)
         const firstDayOfMonth = new Date(year, month, 1).getDay();
 
         calendarDiv.innerHTML = "";
 
-        // Add day names (Sun, Mon, etc.) to the calendar header
         const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         dayNames.forEach(day => {
             const dayNameDiv = document.createElement('div');
@@ -161,18 +169,26 @@ document.addEventListener('DOMContentLoaded', () => {
             calendarDiv.appendChild(dayNameDiv);
         });
 
-        // Add blank divs for the days before the 1st
         for (let i = 0; i < firstDayOfMonth; i++) {
             const blankDiv = document.createElement('div');
             calendarDiv.appendChild(blankDiv);
         }
 
-        // Populate the days of the month
         for (let day = 1; day <= daysInMonth; day++) {
             const date = new Date(year, month, day);
             const dayDiv = document.createElement('div');
             dayDiv.classList.add('calendar-day');
             dayDiv.textContent = day;
+
+            const hasTask = tasks.some(task => {
+                const taskDate = new Date(task.date);
+                return taskDate.getFullYear() === year &&
+                       taskDate.getMonth() === month &&
+                       taskDate.getDate() === day;
+            });
+            if (hasTask) {
+                dayDiv.classList.add('has-task');
+            }
 
             if (
                 date.getDate() === today.getDate() &&
@@ -190,10 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTasks();
     updateProgress();
     generateCalendar();
-    checkDailyStreak(); // New: Check the streak when the page loads
+    checkDailyStreak();
 });
 
-// All functions outside of the DOMContentLoaded listener remain unchanged
 function setAlarm(message, timeInSeconds) {
     setTimeout(() => {
         alert(`⏰ Reminder: ${message}`);
