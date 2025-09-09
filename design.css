@@ -174,11 +174,21 @@ input, select, button {
     color: #fff;
 }
 
-/* NEW: Fix for task content in dark mode */
+/* NEW: Fix for task list items in dark mode */
+.dark-theme .task {
+    background: #2d3436; /* Dark background for the task item */
+    border-left-color: #7f8c8d; /* A lighter border for contrast */
+}
 .dark-theme .task-content {
-    color: #eee; /* A light color for the task name */
+    color: #fff; /* Bright white color for the task name */
     font-weight: bold; /* Make the task name bold */
 }
+
+/* Corrected: Dark theme styles for strikethrough text in tasks */
+.dark-theme .task-content.strikethrough {
+    color: #aaa; /* A light grey for completed tasks */
+}
+
 
 /* New: Dark theme rules for the Daily Streak/Pushups */
 .dark-theme .streak-display {
