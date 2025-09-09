@@ -1,95 +1,95 @@
 /* Enhanced background featuring soft gradient transitions */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: linear-gradient(135deg, #c0d2fc, #e0c3fc); /* pastel blue to lavender */
-  background-attachment: fixed;
-  background-size: cover;
-  color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #c0d2fc, #e0c3fc); /* pastel blue to lavender */
+    background-attachment: fixed;
+    background-size: cover;
+    color: #333;
 }
 
 /* Glassy, elevated container for content */
 .container {
-  max-width: 700px;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Layout styling */
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 form, .controls {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 .controls {
-  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 input, select, button {
-  padding: 10px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
 }
 
 /* Progress bar style */
 .progress-container {
-  position: relative;
-  background: #e0e0e0;
-  border-radius: 25px;
-  overflow: hidden;
-  height: 30px;
-  margin: 15px 0;
+    position: relative;
+    background: #e0e0e0;
+    border-radius: 25px;
+    overflow: hidden;
+    height: 30px;
+    margin: 15px 0;
 }
 .progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #6dd5fa, #2980b9);
-  transition: width 0.5s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: bold;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #6dd5fa, #2980b9);
+    transition: width 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
 }
 
 /*updated calendar*/
 #calendar-container {
-  margin-top: 30px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  text-align: center;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
 }
 
 .calendar-day {
-  padding: 10px;
-  border-radius: 5px;
-  background: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f0f0f0;
 }
 
 /* New: Style for the calendar days with tasks */
 .calendar-day.has-task {
-  position: relative;
-  border: 2px solid #2980b9; /* A blue border to indicate a task */
-  background: #e6f7ff; /* A light blue background */
-  font-weight: bold;
+    position: relative;
+    border: 2px solid #2980b9; /* A blue border to indicate a task */
+    background: #e6f7ff; /* A light blue background */
+    font-weight: bold;
 }
 /* Optional: Add a subtle glow or icon to make it stand out */
 .calendar-day.has-task::after {
@@ -105,28 +105,28 @@ input, select, button {
 }
 
 .calendar-day.today {
-  background: #007bff;
-  color: #fff;
-  font-weight: bold;
+    background: #007bff;
+    color: #fff;
+    font-weight: bold;
 }
 
 /* Task item styling */
 .task {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #fff;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-left: 5px solid gray;
-  border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-left: 5px solid gray;
+    border-radius: 6px;
 }
 .task.low { border-color: #27ae60; }
 .task.medium { border-color: #f39c12; }
 .task.high { border-color: #c0392b; }
 .task-content.strikethrough {
-  text-decoration: line-through;
-  color: #7f8c8d;
+    text-decoration: line-through;
+    color: #7f8c8d;
 }
 
 /* New: Hover effect for task editing */
@@ -141,28 +141,50 @@ input, select, button {
 
 /* Dark theme override */
 .dark-theme {
-  background: linear-gradient(135deg, #2c3e50, #4ca1af);
-  color: #ddd;
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    color: #ddd;
 }
 .dark-theme .container {
-  background: rgba(34, 34, 34, 0.9);
+    background: rgba(34, 34, 34, 0.9);
 }
 .dark-theme input, .dark-theme select, .dark-theme button {
-  background: #444;
-  color: #ddd;
+    background: #444;
+    color: #ddd;
+}
+.dark-theme #calendar-container {
+    background: #333;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Corrected: Dark theme calendar days for better contrast */
+.dark-theme .calendar-day {
+    background: #555; /* A darker grey for better contrast */
+    color: #ddd; /* A lighter color for the text */
+    font-weight: bold; /* Making the font bolder for readability */
+}
+
+/* Corrected: Dark theme styles for specific calendar days */
+.dark-theme .calendar-day.has-task {
+    background: #3c6e71; /* A distinct dark teal color */
+    border-color: #7dd0e0; /* A lighter border */
+    color: #fff; /* White text for maximum contrast */
+}
+.dark-theme .calendar-day.today {
+    background: #007bff; /* Keep the bright blue highlight */
+    color: #fff;
 }
 
 /* Add subtle hover effects */
 button:hover {
-  opacity: 0.9;
-  cursor: pointer;
+    opacity: 0.9;
+    cursor: pointer;
 }
 
 /* New: Style for the sort button */
 #sortButton {
-  background: #6dd5fa;
-  color: white;
+    background: #6dd5fa;
+    color: white;
 }
 #sortButton:hover {
-  background: #2980b9;
+    background: #2980b9;
 }
